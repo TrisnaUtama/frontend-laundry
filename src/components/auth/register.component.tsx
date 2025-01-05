@@ -124,7 +124,11 @@ export const SignUpForm = () => {
 					{renderErrorMessage("password")}
 
 					<span
-						className={`absolute right-3 text-gray-500 cursor-pointer ${state?.errors ? "-translate-y-0 top-0 mt-1.5" : "top-1/2 transform -translate-y-1/2"}`}
+						className={`absolute right-3 text-gray-500 cursor-pointer ${
+							state?.errors
+								? "-translate-y-0 top-0 mt-1.5"
+								: "top-1/2 transform -translate-y-1/2"
+						}`}
 						onClick={handleTogglePassword}
 						onKeyDown={(e) => {
 							if (e.key === "Enter" || e.key === " ") {
@@ -143,15 +147,18 @@ export const SignUpForm = () => {
 			<div className="mt-10">
 				<Button
 					type="submit"
-					className={`w-full font-semibold rounded-xl bg-[#2C71F6] hover:bg-[#2c6ff6e0] ${
-						pending && "animate-pulse"
+					className={`w-full font-semibold rounded-xl bg-[#2C71F6] transition-colors duration-300  hover:bg-[#2c6ff6e0] ${
+						pending && "transition-transform animate-pulse duration-500"
 					}`}
 				>
 					{pending ? "Loading" : "Create Account"}
 				</Button>
 				<p className="text-[13px] font-bold mt-2">
 					already have an account?{" "}
-					<Link href="#" className="underline text-[13px] text-[#2C71F6]">
+					<Link
+						href="#"
+						className="underline text-[13px] transition-colors duration-300  text-[#2C71F6] hover:text-[#2c6ff6e0]"
+					>
 						login here
 					</Link>
 				</p>

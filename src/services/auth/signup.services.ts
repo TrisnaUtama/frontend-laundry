@@ -2,6 +2,7 @@
 
 import { ROOT_URL } from "@/constants/constant";
 import { z } from "zod";
+import { cookies } from "next/headers";
 
 const SignUpSchema = z.object({
 	name: z.string().min(2, { message: "name at least 2 characters long" }),
@@ -21,19 +22,6 @@ const SignUpSchema = z.object({
 		.min(12, { message: "phone number at least 12 digit" }),
 });
 
-type UserData = {
-	user_id: string;
-	name: string;
-	phone_number: string;
-	email: string;
-	role: string;
-	isOnline: boolean;
-};
-
-export type SignUpActionState =
-	| { status: true; message: string; data: UserData }
-	| { status: false; message: string; errors?: Record<string, string[]> };
-
 export async function signUp(prevState: unknown, form: FormData) {
 	try {
 		const name = form.get("name") as string;
@@ -41,6 +29,7 @@ export async function signUp(prevState: unknown, form: FormData) {
 		const email = form.get("email") as string;
 		const address = form.get("address") as string;
 		const phone_number = form.get("phone_number") as string;
+		const cookieSore = await cookies();
 
 		const formDataValue = SignUpSchema.safeParse({
 			name,
@@ -71,6 +60,14 @@ export async function signUp(prevState: unknown, form: FormData) {
 		}
 
 		const responseData = await res.json();
+
+		const data_user = {
+			email: responseData.email,
+			user_id: responseData.user_id,
+		};
+
+		cookieSore.set("registered_user", JSON.stringify(data_user));
+
 		return {
 			status: true,
 			message: "success signup",

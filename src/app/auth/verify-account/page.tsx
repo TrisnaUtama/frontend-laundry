@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { VerifyAccount } from "@/components/auth/verify.component";
 
 export default function page() {
 	return (
@@ -16,13 +17,14 @@ export default function page() {
 				</div>
 				{/* form register */}
 				<div className="m-auto col-span-2">
-					<h1 className="font-bold text-3xl">Verify your Account</h1>
+					<h1 className="font-bold text-3xl text-center">
+						Verify your Account
+					</h1>
 					<p className="font-semibold text-sm mt-2">
-						Please provide the OTP code
+						Please enter the 6-digit code sent to your email
 					</p>
-					<p className="font-semibold text-sm mt-2">
-						don’t give the otp code to anyone
-					</p>
+
+					<VerifyAccount />
 				</div>
 			</div>
 		</main>
