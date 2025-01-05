@@ -4,8 +4,7 @@ import { ROOT_URL } from "@/constants/constant";
 import { z } from "zod";
 import { cookies } from "next/headers";
 
-const SignUpSchema = z.object({
-  name: z.string().min(2, { message: "name at least 2 characters long" }),
+const SignInSchema = z.object({
   password: z
     .string()
     .min(8, { message: "password at least 8 characters long" })
@@ -16,27 +15,17 @@ const SignUpSchema = z.object({
     })
     .trim(),
   email: z.string().email(),
-  address: z.string().min(5, { message: "address at least 8 characters long" }),
-  phone_number: z
-    .string()
-    .min(12, { message: "phone number at least 12 digit" }),
 });
 
-export async function signUp(prevState: unknown, form: FormData) {
+export async function signIn(prevState: unknown, form: FormData) {
   try {
-    const name = form.get("name") as string;
     const password = form.get("password") as string;
     const email = form.get("email") as string;
-    const address = form.get("address") as string;
-    const phone_number = form.get("phone_number") as string;
     const cookieSore = await cookies();
 
-    const formDataValue = SignUpSchema.safeParse({
-      name,
+    const formDataValue = SignInSchema.safeParse({
       password,
       email,
-      address,
-      phone_number,
     });
 
     if (!formDataValue.success) {
@@ -44,11 +33,11 @@ export async function signUp(prevState: unknown, form: FormData) {
         status: false,
         message: "validation errors occured !",
         errors: formDataValue.error.flatten().fieldErrors,
-        fieldValues: { name, password, email, address, phone_number },
+        fieldValues: { email, password },
       };
     }
 
-    const res = await fetch(`${ROOT_URL}/v1/register`, {
+    const res = await fetch(`${ROOT_URL}/v1/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -64,17 +53,11 @@ export async function signUp(prevState: unknown, form: FormData) {
         message: responseData.message,
       };
     }
-
-    const data_user = {
-      email: responseData.email,
-      user_id: responseData.user_id,
-    };
-
-    cookieSore.set("registered_user", JSON.stringify(data_user));
+    cookieSore.set("AUTHORIZATION", JSON.stringify(responseData.data));
 
     return {
       status: true,
-      message: "success signup",
+      message: "success sign in",
       data: responseData,
     };
   } catch (error) {
