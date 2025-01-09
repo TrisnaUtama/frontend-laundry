@@ -28,8 +28,8 @@ export default function Footer({ handler }: { handler: boolean }) {
 	return (
 		<div
 			className={`${
-				handler ? "w-[80%] h-[20%]" : "left-[8%] w-[92%] h-[20%]"
-			} p-5 fixed bottom-0 transition-transform duration-500 ${
+				handler ? "w-[80%] h-[20%] left-[20%] " : "left-[8%] w-[92%] h-[20%]"
+			} p-5 fixed bottom-0 transition-all duration-300 ease-in-out ${
 				isVisible ? "translate-y-0" : "translate-y-full"
 			}`}
 			style={{ backgroundColor: backgroundDark }}

@@ -17,7 +17,7 @@ export async function verify(prevState: unknown, form: FormData) {
 
 		const formDataValue = VerifyOTPSchema.safeParse({
 			code,
-			user_id: user?.user_id,
+			user_id: user.user_id,
 		});
 
 		if (!formDataValue.success) {

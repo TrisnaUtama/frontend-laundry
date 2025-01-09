@@ -6,8 +6,15 @@ import {
   HomeIcon,
   PenTool,
   ChartBarIncreasing,
+  View,
   User,
 } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { useState, useEffect } from "react";
 import { Button } from "../ui/button";
 import Link from "next/link";
@@ -65,7 +72,6 @@ export default function SidebarAdmin({
           </p>
         </div>
       </div>
-      <hr className={`bg-[${strokes}] ${isOpen && "mx-5"}`} />
 
       <div>
         {Object.keys(groupedRoutes).map((type) => (
@@ -89,15 +95,26 @@ export default function SidebarAdmin({
                 onClick={() => handleIsOpenSection(type)}
                 className="m-5 bg-transparent shadow-transparent hover:bg-transparent text-black hover:text-blue-600"
               >
-                {type === "Overview" ? (
-                  <HomeIcon className=" w-7 h-7 transition-colors duration-300" />
-                ) : type === "Bussines" ? (
-                  <PenTool className="  w-7 h-7  transition-colors duration-300" />
-                ) : type === "People Management" ? (
-                  <User className="  w-7 h-7 transition-colors duration-300" />
-                ) : (
-                  <ChartBarIncreasing className=" w-7 h-7  transition-colors duration-300" />
-                )}
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Link href="#">
+                        {type === "Overview" ? (
+                          <View className=" w-5 h-5 transition-colors duration-300" />
+                        ) : type === "Bussines" ? (
+                          <PenTool className=" w-5 h-5 transition-colors duration-300" />
+                        ) : type === "People Management" ? (
+                          <User className="  w-5 h-5 transition-colors duration-300" />
+                        ) : (
+                          <ChartBarIncreasing className=" w-5 h-5  transition-colors duration-300" />
+                        )}
+                      </Link>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p className="font-medium">{type}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </Button>
             )}
             <div
@@ -133,16 +150,25 @@ export default function SidebarAdmin({
                     </>
                   ) : (
                     <>
-                      <Link
-                        href={route.pathname}
-                        className="hover:text-blue-500"
-                      >
-                        <route.icon
-                          className={`text-gray-500 hover:text-blue-500 transition-colors duration-500 ${
-                            isSelectItem === route.menu && "text-blue-500"
-                          }`}
-                        />
-                      </Link>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Link
+                              href={route.pathname}
+                              className="hover:text-blue-500"
+                            >
+                              <route.icon
+                                className={`w-5 h-5 text-gray-500 hover:text-blue-500 transition-colors duration-500 ${
+                                  isSelectItem === route.menu && "text-blue-500"
+                                }`}
+                              />
+                            </Link>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p className="font-medium">{route.menu}</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </>
                   )}
                 </div>

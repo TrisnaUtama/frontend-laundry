@@ -20,7 +20,9 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={`${quicksand.className} bg-[#EBEBEB] antialiased`}>
+			<body
+				className={`${quicksand.className} bg-[#EBEBEB] antialiased`}
+			>
 				{children}
 				<Toaster />
 			</body>

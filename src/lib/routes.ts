@@ -37,9 +37,9 @@ export const getRoutes = (role: string | null): Route[] => {
           type: "Bussines",
         },
         {
-          pathname: "/dashboard/admin",
+          pathname: "/dashboard/admin/management-staff/",
           icon: UserCog2Icon,
-          menu: "Employee",
+          menu: "Staff",
           type: "People Management",
         },
         {
