@@ -8,13 +8,13 @@ import { Button } from "../../components/ui/button";
 import Link from "next/link";
 import { signIn } from "@/services/auth/signin.services";
 import { useToast } from "@/hooks/use-toast";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export const SignInForm = () => {
   const [togglePassword, setTogglePassword] = useState<boolean>(false);
-  const [state, action, pending] = useActionState(signIn, null);
+  const [state, action, pending] = useActionState(signIn, undefined);
   const { toast } = useToast();
-  // const router = useRouter();
+  const router = useRouter();
 
   const handleTogglePassword = () => {
     setTogglePassword(!togglePassword);
@@ -37,22 +37,30 @@ export const SignInForm = () => {
   };
 
   useEffect(() => {
-    if (state?.status === true) {
+    if (state?.status) {
       toast({
         variant: "success",
         title: "Success",
-        description: "Successfully sign in",
+        description: "Successfully signed in",
       });
-
-      // router.push("/auth/dashboard");
+      const userRole = state?.data?.data?.user?.role;
+      if (userRole) {
+        if (userRole === "Admin") {
+          router.push("/dashboard/admin/");
+        } else if (userRole === "Staff") {
+          router.push("/dashboard/staff/");
+        } else if (userRole === "User") {
+          router.push("/dashboard/user/");
+        }
+      }
     } else if (state?.status === false) {
       toast({
         variant: "destructive",
         title: "Error",
-        description: state.message || "sign in failed",
+        description: state.message || "Sign in failed",
       });
     }
-  }, [state, toast]);
+  }, [state, toast, router]);
 
   return (
     <form action={action} className="mt-4 space-y-4">
