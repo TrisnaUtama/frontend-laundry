@@ -58,7 +58,6 @@ export async function getAllStaff() {
     });
 
     const responseData = await res.json();
-
     if (!res.ok) {
       return {
         status: false,
@@ -274,7 +273,7 @@ export async function updateStaff(prevState: unknown, form: FormData) {
 
     return {
       status: true,
-      message: "success edit data staff",
+      message: "success update data staff",
       data: responseData,
     };
   } catch (error) {

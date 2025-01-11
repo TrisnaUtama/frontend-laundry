@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
 import { Toaster } from "@/components/ui/toaster";
 import "@/styles/globals.css";
-import { backgroundColor } from "@/constants/constant";
 
 const quicksand = Quicksand({
 	subsets: ["latin"],
@@ -20,9 +19,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body
-				className={`${quicksand.className} bg-[#EBEBEB] antialiased`}
-			>
+			<body className={`${quicksand.className} bg-[#EBEBEB] antialiased`}>
 				{children}
 				<Toaster />
 			</body>

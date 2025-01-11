@@ -9,9 +9,11 @@ import { useState } from "react";
 export default function DashboardLayoutClient({
   children,
   role,
+  user_id,
 }: {
   children: React.ReactNode;
   role: string;
+  user_id: string;
 }) {
   const [handlerSidebar, setHandler] = useState(false);
   const toggleSidebar = () => {
@@ -21,11 +23,15 @@ export default function DashboardLayoutClient({
     <>
       {role === "User" ? (
         <>
-          <div className="fixed top-0 left-0 w-full z-50">
-            <NavbarUser />
+          <div className="relative min-h-screen">
+            <div className="fixed top-0 left-0 w-full z-50">
+              <NavbarUser user_id={user_id} />
+            </div>
+
+            <main className="pt-16 pb-20">{children}</main>
+
+            <Footer handler={false} />
           </div>
-          <main>{children}</main>
-          <Footer handler={handlerSidebar} />
         </>
       ) : (
         <>
@@ -34,7 +40,11 @@ export default function DashboardLayoutClient({
           </div>
 
           <div className="fixed top-0 z-50">
-            <NavbarAdmin handler={toggleSidebar} isOpen={handlerSidebar} />
+            <NavbarAdmin
+              user_id={user_id}
+              handler={toggleSidebar}
+              isOpen={handlerSidebar}
+            />
           </div>
           <main
             className={`relative transition-all duration-300 ease-in-out  ${

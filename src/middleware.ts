@@ -27,7 +27,6 @@ export async function middleware(request: NextRequest) {
     const refreshTokenStatus = checkTokenExpiry(refresh);
 
     if (accessTokenStatus?.expiresIn <= 300 && !refreshTokenStatus?.isExpired) {
-      console.log("Access token is near expiry. Attempting to refresh...");
 
       try {
         const response = NextResponse.next();

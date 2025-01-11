@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { SignInForm } from "@/pages/auth/signin.page";
+import  SignInForm  from "@/pages/auth/signin.page";
 
 export default function Page() {
 	return (
