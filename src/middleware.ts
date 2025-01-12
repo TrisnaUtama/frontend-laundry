@@ -26,6 +26,9 @@ export async function middleware(request: NextRequest) {
 		const accessTokenStatus = checkTokenExpiry(access);
 		const refreshTokenStatus = checkTokenExpiry(refresh);
 
+		console.log(accessTokenStatus);
+		console.log(refreshTokenStatus);
+
 		if (accessTokenStatus?.expiresIn <= 300 && !refreshTokenStatus?.isExpired) {
 			try {
 				const response = NextResponse.next();
