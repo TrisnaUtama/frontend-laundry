@@ -9,7 +9,7 @@ import {
 	BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 
-import AddStaffForm from "@/features/pages/admin/staffs/create.page";
+import AddStaffForm from "@/pages/admin/staffs/create.page";
 
 export default function page() {
 	return (

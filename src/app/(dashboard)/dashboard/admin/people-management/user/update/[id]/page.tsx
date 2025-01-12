@@ -6,7 +6,7 @@ import {
 	BreadcrumbPage,
 	BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import EdituserForm from "@/features/pages/admin/users/update";
+import EdituserForm from "@/pages/admin/users/update";
 
 interface PageProps {
 	params: Promise<{ id: string }>;
