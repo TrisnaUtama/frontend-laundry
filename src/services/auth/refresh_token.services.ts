@@ -25,6 +25,8 @@ export async function refreshToken(
 				Cookie: `refresh_token=${refresh_token}`,
 			},
 		});
+		const response = await res.json();
+		console.log(response);
 
 		if (!res.ok) {
 			throw new Error("Failed to refresh token");
