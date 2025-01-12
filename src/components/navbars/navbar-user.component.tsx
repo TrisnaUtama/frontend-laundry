@@ -4,13 +4,37 @@ import { useState, useEffect } from "react";
 import { primaryColor, strokes, hoverPrimaryColor } from "@/constants/constant";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { WashingMachineIcon, Menu } from "lucide-react";
+import { WashingMachineIcon, Menu, User } from "lucide-react";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuLabel,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+	AlertDialog,
+	AlertDialogContent,
+	AlertDialogTitle,
+	AlertDialogDescription,
+	AlertDialogCancel,
+	AlertDialogAction,
+	AlertDialogHeader,
+	AlertDialogFooter,
+} from "@/components/ui/alert-dialog";
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
+import { logout } from "@/services/auth/logout.services";
 
-export default function NavbarUser() {
+export default function NavbarUser({ user_id }: { user_id: string }) {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const [isVisible, setIsVisible] = useState(true);
 	const [lastScrollPos, setLastScrollPos] = useState(0);
+	const [isAlertOpen, setIsAlertOpen] = useState(false);
 	const [isChoosee, setIsChoosee] = useState("");
+	const { toast } = useToast();
+	const router = useRouter();
 
 	const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -46,9 +70,43 @@ export default function NavbarUser() {
 		setIsChoosee(section);
 	};
 
+	const handleLogout = async () => {
+		try {
+			const result = await logout(user_id);
+
+			if (result.status) {
+				toast({
+					variant: "success",
+					title: "Success",
+					description: result.message || "Successfully Logout",
+				});
+				router.push("/auth/sign-in");
+			} else {
+				toast({
+					variant: "destructive",
+					title: "Failed",
+					description: result.message || "Failed Logout",
+				});
+			}
+		} catch (error) {
+			if (error instanceof Error) {
+				toast({
+					variant: "destructive",
+					title: "Failed",
+					description: error.message || "Failed Logout",
+				});
+			}
+			toast({
+				variant: "destructive",
+				title: "Failed",
+				description: "Something Wrong while logout",
+			});
+		}
+	};
+
 	return (
 		<nav
-			className={`fixed top-0 left-0 w-full z-50 transition-transform duration-300 ${
+			className={`fixed top-0 left-0 w-full z-50 transition-transform duration-300  ${
 				isVisible ? "translate-y-0" : "-translate-y-full"
 			}`}
 		>
@@ -56,7 +114,7 @@ export default function NavbarUser() {
 				className={`flex justify-between items-center border-b border-b-[${strokes}] h-16 w-full bg-white p-5 relative`}
 			>
 				{/* Logo Section */}
-				<div className="ms-3">
+				<div className="ms-[12%]">
 					<p className={`text-[${primaryColor}] font-bold text-2xl`}>
 						LaundryHub
 					</p>
@@ -64,10 +122,10 @@ export default function NavbarUser() {
 
 				{/* Links Section */}
 				<div className="hidden md:flex space-x-10">
-					{["Home", "Services", "About-Us", "FAQ", "Contact"].map((item) => (
+					{["Home", "Services", "About-Us", "Contact"].map((item) => (
 						<Link
 							key={item}
-							href="#"
+							href={`#${item.toLocaleLowerCase().replace("-", " ")}`}
 							onClick={() => handleClickNavbar(item)}
 							className={`font-semibold relative text-sm transition-all ${
 								isChoosee === item
@@ -81,19 +139,51 @@ export default function NavbarUser() {
 				</div>
 
 				{/* Actions Section */}
-				<div className="hidden md:flex justify-between items-center gap-4">
-					<Link href="#" className="hover:cursor-pointer">
+				<div className="hidden md:flex justify-between items-center gap-4 me-[12%]">
+					<Link href="/dashboard/user/orders" className="hover:cursor-pointer">
 						<WashingMachineIcon className="w-10 hover:text-blue-500 hover:transition-colors hover:duration-500 duration-500" />
 					</Link>
-					<Button
-						className={`bg-[${primaryColor}] hover:bg-[${hoverPrimaryColor}] rounded-xl shadow-none font-semibold`}
-					>
-						Schedule a Pick Up
-					</Button>
+					<DropdownMenu>
+						<DropdownMenuTrigger>
+							<User className="text-black hover:text-blue-500 transition-colors duration-500" />
+						</DropdownMenuTrigger>
+						<DropdownMenuContent className="mx-5">
+							<DropdownMenuLabel>My Account</DropdownMenuLabel>
+							<DropdownMenuSeparator />
+							<DropdownMenuItem className="font-medium">
+								Profile
+							</DropdownMenuItem>
+							<DropdownMenuItem
+								className="font-medium"
+								onSelect={() => setIsAlertOpen(true)}
+							>
+								Logout
+							</DropdownMenuItem>
+						</DropdownMenuContent>
+					</DropdownMenu>
 				</div>
 
+				<AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
+					<AlertDialogContent>
+						<AlertDialogHeader>
+							<AlertDialogTitle className="font-bold">
+								Are you absolutely sure?
+							</AlertDialogTitle>
+							<AlertDialogDescription className="font-semibold">
+								This action will Logout your account
+							</AlertDialogDescription>
+						</AlertDialogHeader>
+						<AlertDialogFooter>
+							<AlertDialogCancel>Cancel</AlertDialogCancel>
+							<AlertDialogAction onClick={handleLogout}>
+								Continue
+							</AlertDialogAction>
+						</AlertDialogFooter>
+					</AlertDialogContent>
+				</AlertDialog>
+
 				{/* Hamburger Menu */}
-				<div className="md:hidden">
+				<div className="md:hidden me-[12%]">
 					<Button
 						onClick={toggleMenu}
 						className="text-gray-600 bg-white hover:bg-gray-200 transition-all duration-300"
@@ -121,49 +211,46 @@ export default function NavbarUser() {
 			>
 				<div className="flex flex-col items-center space-y-4">
 					<Link
-						href="#"
+						href="home"
 						className="font-semibold hover:text-gray-600 transition-colors duration-200"
 						onClick={() => setIsMenuOpen(false)}
 					>
 						Home
 					</Link>
 					<Link
-						href="#"
+						href="services"
 						className="font-semibold hover:text-gray-600 transition-colors duration-200"
 						onClick={() => setIsMenuOpen(false)}
 					>
 						Services
 					</Link>
 					<Link
-						href="#"
+						href="about us"
 						className="font-semibold hover:text-gray-600 transition-colors duration-200"
 						onClick={() => setIsMenuOpen(false)}
 					>
 						About Us
 					</Link>
 					<Link
-						href="#"
-						className="font-semibold hover:text-gray-600 transition-colors duration-200"
-						onClick={() => setIsMenuOpen(false)}
-					>
-						FAQ
-					</Link>
-					<Link
-						href="#"
+						href="contact"
 						className="font-semibold hover:text-gray-600 transition-colors duration-200"
 						onClick={() => setIsMenuOpen(false)}
 					>
 						Contact
 					</Link>
 					<div className="flex items-center gap-4 mt-4">
-						<Link href="#" className="hover:cursor-pointer">
+						<Link
+							href="/dashboard/user/orders/"
+							className="hover:cursor-pointer transition-colors duration-300 hover:text-blue-500"
+						>
 							<WashingMachineIcon className="w-8" />
 						</Link>
-						<Button
-							className={`bg-[${primaryColor}] hover:bg-[${hoverPrimaryColor}] rounded-xl shadow-none`}
+						<Link
+							href="/dashboard/user/orders/create"
+							className={`p-3 transition-colors duration-300 text-white font-medium bg-[${primaryColor}] hover:bg-[${hoverPrimaryColor}] rounded-xl shadow-none`}
 						>
 							Schedule a Pick Up
-						</Button>
+						</Link>
 					</div>
 				</div>
 			</div>

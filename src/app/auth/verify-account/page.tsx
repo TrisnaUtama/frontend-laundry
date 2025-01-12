@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { VerifyAccount } from "@/pages/auth/verify.page";
+import VerifyAccount from "@/pages/auth/verify.page";
 
 export default function page() {
 	return (

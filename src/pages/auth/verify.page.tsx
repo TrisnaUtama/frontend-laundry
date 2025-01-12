@@ -13,7 +13,7 @@ import { verify, resendOtp } from "@/services/auth/verify.services";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 
-export const VerifyAccount = () => {
+export default function VerifyAccount() {
 	const TIMER_DURATION = 2 * 60;
 	const [timeLeft, setTimeLeft] = useState(TIMER_DURATION);
 	const [canResend, setCanResend] = useState(false);
@@ -181,4 +181,4 @@ export const VerifyAccount = () => {
 			</div>
 		</div>
 	);
-};
+}

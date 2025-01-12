@@ -11,7 +11,7 @@ import { signUp } from "@/services/auth/signup.services";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 
-export const SignUpForm = () => {
+export default function () {
 	const [togglePassword, setTogglePassword] = useState<boolean>(false);
 	const [state, action, pending] = useActionState(signUp, null);
 	const { toast } = useToast();
@@ -150,6 +150,7 @@ export const SignUpForm = () => {
 			</div>
 			<div className="mt-10">
 				<Button
+					disabled={pending}
 					type="submit"
 					className={`w-full font-semibold rounded-xl bg-[#2C71F6] transition-colors duration-300  hover:bg-[#2c6ff6e0] ${
 						pending && "transition-transform animate-pulse duration-500"
@@ -169,4 +170,4 @@ export const SignUpForm = () => {
 			</div>
 		</form>
 	);
-};
+}

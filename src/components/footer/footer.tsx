@@ -26,17 +26,17 @@ export default function Footer({ handler }: { handler: boolean }) {
 	}, []);
 
 	return (
-		<div
+		<footer
 			className={`${
-				handler ? "w-[80%] h-[20%] left-[20%] " : "left-[8%] w-[92%] h-[20%]"
-			} p-5 fixed bottom-0 transition-all duration-300 ease-in-out ${
+				handler ? "w-[80%] left-[20%]" : "w-full"
+			} h-[20%] transition-all duration-300 ease-in-out ${
 				isVisible ? "translate-y-0" : "translate-y-full"
-			}`}
+			} fixed bottom-0 z-40`}
 			style={{ backgroundColor: backgroundDark }}
 		>
-			<p className="flex justify-center items-center text-white font-bold h-full">
-				Footer
-			</p>
-		</div>
+			<div className="flex justify-center items-center h-full">
+				<p className="text-white font-bold">Footer</p>
+			</div>
+		</footer>
 	);
 }
