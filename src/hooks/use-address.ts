@@ -1,18 +1,18 @@
 import { useState, useEffect } from "react";
 import {
-	getAllService,
-	type Service,
-} from "@/services/services/services.services";
+	getAllUserAddressByAdmin,
+	type Address,
+} from "@/services/address/address.services";
 
-export const useService = () => {
-	const [services, setServices] = useState<Service[]>([]);
+export const useAddress = (id: string) => {
+	const [type, setType] = useState<Address[]>([]);
 
 	useEffect(() => {
 		const fetchType = async () => {
 			try {
-				const res = await getAllService();
+				const res = await getAllUserAddressByAdmin(id);
 				if (res.status) {
-					setServices(res.data);
+					setType(res.data);
 				} else {
 					console.error(res.message);
 				}
@@ -21,7 +21,7 @@ export const useService = () => {
 			}
 		};
 		fetchType();
-	}, []);
+	}, [id]);
 
-	return services;
+	return type;
 };

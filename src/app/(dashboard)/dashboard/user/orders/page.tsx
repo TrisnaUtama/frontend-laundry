@@ -30,15 +30,15 @@ export default function page() {
       <div className="p-3 rounded-md bg-white mt-2">
         <h1 className="font-bold text-2xl">Orders</h1>
         <p className="text-justify text-sm font-medium">
-          On this page, you can see your orders to the system by
-          filling out the required details such as name, role, contact
-          information, and other necessary information. Ensure that all fields
-          are correctly filled out to grant the staff member access to the
-          system with the appropriate permissions.
+          On this page, you can see your orders to the system by filling out the
+          required details such as name, role, contact information, and other
+          necessary information. Ensure that all fields are correctly filled out
+          to grant the staff member access to the system with the appropriate
+          permissions.
         </p>
       </div>
-      
-        <OrdersPage />
+
+      <OrdersPage />
     </main>
   );
 }

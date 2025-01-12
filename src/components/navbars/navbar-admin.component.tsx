@@ -38,7 +38,7 @@ export default function NavbarAdmin({
 	const [lastScrollPos, setLastScrollPos] = useState(0);
 	const [isAlertOpen, setIsAlertOpen] = useState(false);
 	const { toast } = useToast();
-	 const router = useRouter();
+	const router = useRouter();
 
 	useEffect(() => {
 		const handleResize = () => {

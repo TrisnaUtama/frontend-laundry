@@ -7,16 +7,6 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogTitle,
-  AlertDialogDescription,
-  AlertDialogCancel,
-  AlertDialogAction,
-  AlertDialogHeader,
-  AlertDialogFooter,
-} from "@/components/ui/alert-dialog";
 import type { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { Button } from "../../ui/button";
@@ -29,6 +19,17 @@ import { useItemTypes } from "@/hooks/use-item-type";
 import type { Order } from "@/services/orders/order.services";
 import { useService } from "@/hooks/use-services";
 import { usePayment } from "@/hooks/use-payment";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogCancel,
+  AlertDialogAction,
+  AlertDialogHeader,
+  AlertDialogFooter,
+} from "@/components/ui/alert-dialog";
+import DialogOrder from "@/components/dialog/dialog-order";
 
 export const OrderColumns = () => {
   const item = useItem();
@@ -155,26 +156,9 @@ export const OrderColumns = () => {
       id: "actions",
       enableHiding: false,
       cell: ({ row }) => {
-        const [isOpen, setIsOpen] = useState<boolean>(false);
+        const [isOpen, setIsOpen] = useState<boolean>();
         const order = row.original;
         const { toast } = useToast();
-
-        const handleDelete = async (id: string) => {
-          const result = await unactiveService(id);
-          if (result.status) {
-            toast({
-              variant: "success",
-              title: "Success",
-              description: result.message,
-            });
-          } else {
-            toast({
-              variant: "destructive",
-              title: "Failed",
-              description: result.message,
-            });
-          }
-        };
 
         return (
           <>
@@ -196,47 +180,26 @@ export const OrderColumns = () => {
                     navigator.clipboard.writeText(order.order_id as string)
                   }
                 >
-                  Copy Service ID
+                  Copy Order ID
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <Link
-                  href={`/dashboard/admin/bussines/orders/update/${order.order_id}`}
-                  className="flex justify-center items-center text-sm p-1.5 hover:bg-slate-100 rounded-md"
-                >
-                  Update Service
-                </Link>
-                {/* <div className="flex justify-center items-center">
+                <div className="flex justify-center items-center">
                   <Button
-                    disabled={order.status}
                     onClick={() => setIsOpen(true)}
                     className=" text-sm font-normal p-1.5 bg-transparent shadow-transparent border-transparent text-black hover:bg-slate-100 rounded-md"
                   >
-                    Unactive Service
+                    Detail Order
                   </Button>
-                </div> */}
+                </div>
               </DropdownMenuContent>
             </DropdownMenu>
-
-            {/* <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle className="font-bold">
-                    Are you absolutely sure?
-                  </AlertDialogTitle>
-                  <AlertDialogDescription className="font-semibold">
-                    This action will Delete the Service
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction
-                    onClick={() => handleDelete(service.service_id as string)}
-                  >
-                    Continue
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog> */}
+            {isOpen && (
+              <DialogOrder
+                isOpen
+                onClose={() => setIsOpen(false)}
+                order={order}
+              />
+            )}
           </>
         );
       },

@@ -11,7 +11,7 @@ import {
 
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
-import { canceledOrder } from "../../../services/orders/order.services";
+import { canceledOrder } from "@/services/orders/order.services";
 import { Textarea } from "@/components/ui/textarea";
 
 export default function CanceledOrder({

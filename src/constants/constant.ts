@@ -1,5 +1,5 @@
 //  api url
-export const ROOT_URL = "http://localhost:8000/api";
+export const ROOT_URL = "http://20.28.54.48:8000/api";
 
 // colors
 export const primaryColor = "#2C71F6";

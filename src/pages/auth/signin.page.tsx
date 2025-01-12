@@ -2,15 +2,15 @@
 
 import { useActionState, useEffect, useState } from "react";
 import { Eye, EyeClosed } from "lucide-react";
-import { Input } from "../../components/ui/input";
-import { Label } from "../../components/ui/label";
-import { Button } from "../../components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { signIn } from "@/services/auth/signin.services";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 
-export default function SignInForm(){
+export default function SignInForm() {
 	const [togglePassword, setTogglePassword] = useState<boolean>(false);
 	const [state, action, pending] = useActionState(signIn, undefined);
 	const { toast } = useToast();
@@ -139,4 +139,4 @@ export default function SignInForm(){
 			</div>
 		</form>
 	);
-};
+}

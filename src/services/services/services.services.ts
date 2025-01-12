@@ -40,6 +40,7 @@ export async function getAllService() {
     });
 
     const responseData = await res.json();
+    console.log(responseData);
 
     if (!res.ok) {
       return {
@@ -69,7 +70,7 @@ export async function getAllService() {
   }
 }
 
-export async function getSpecificService(id:string) {
+export async function getSpecificService(id: string) {
   const cookieStore = await cookies();
   const cookiesParse = cookieStore.get("AUTHORIZATION");
   const cookie = cookiesParse ? JSON.parse(cookiesParse.value) : null;
@@ -294,8 +295,6 @@ export async function updateServices(prevState: unknown, form: FormData) {
     };
   }
 }
-
-
 
 export async function unactiveService(id: string) {
   const cookieStore = await cookies();

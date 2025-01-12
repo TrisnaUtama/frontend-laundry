@@ -6,9 +6,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import EdituserForm from "@/pages/admin/users/update";
-
-
+import EdituserForm from "@/features/pages/admin/users/update";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -42,12 +40,12 @@ export default async function page({ params }: PageProps) {
         <div className="p-4">
           <h1 className="font-bold text-2xl mt-4">Update User Data</h1>
           <p className="text-justify text-sm font-medium">
-            On this page, you can edit the details of an existing user member
-            in the system. Update fields such as name, role, contact
-            information, or other necessary details to ensure the user member's
-            information remains accurate and up-to-date. Ensure all changes are
-            correctly filled out to maintain proper access and permissions
-            within the system.
+            On this page, you can edit the details of an existing user member in
+            the system. Update fields such as name, role, contact information,
+            or other necessary details to ensure the user member's information
+            remains accurate and up-to-date. Ensure all changes are correctly
+            filled out to maintain proper access and permissions within the
+            system.
           </p>
         </div>
       </div>
