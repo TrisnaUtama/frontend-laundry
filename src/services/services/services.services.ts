@@ -40,7 +40,6 @@ export async function getAllService() {
 		});
 
 		const responseData = await res.json();
-		console.log(responseData);
 
 		if (!res.ok) {
 			return {
