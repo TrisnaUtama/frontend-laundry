@@ -127,18 +127,18 @@ export async function updateOrder(prevState: unknown, form: FormData) {
 				cancellation_reason,
 				status,
 			});
-		} else if(type === "received") {
-            const status_data = "received"
+		} else if (type === "received") {
+			const status_data = "received";
 			formDataValue = UpdatedOrderSchema.safeParse({
 				order_id,
-				status : status_data,
+				status: status_data,
 			});
-		}else{
-            formDataValue = UpdatedOrderSchema.safeParse({
+		} else {
+			formDataValue = UpdatedOrderSchema.safeParse({
 				order_id,
 				status,
 			});
-        }
+		}
 
 		if (!formDataValue.success) {
 			return {
