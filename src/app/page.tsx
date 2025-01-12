@@ -169,9 +169,7 @@ export default function Page() {
 						Effortless Laundry, Fresh Results
 					</motion.p>
 					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-						{services.length === 0 ? (
-							<p>Loading</p>
-						) : (
+						{
 							services.slice(0, 3).map((val, index) => (
 								<motion.div
 									key={index}
@@ -196,7 +194,7 @@ export default function Page() {
 									</Card>
 								</motion.div>
 							))
-						)}
+						}
 					</div>
 				</div>
 			</motion.section>
