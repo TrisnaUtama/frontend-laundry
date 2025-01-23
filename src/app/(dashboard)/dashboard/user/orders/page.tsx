@@ -11,7 +11,7 @@ import OrdersPage from "@/features/user/order/order.page";
 
 export default function page() {
 	return (
-		<main className="mx-[12%] my-[2%]">
+		<main className="mx-[12%] my-[2%] ">
 			<div className="p-2 rounded-md bg-white">
 				<Breadcrumb>
 					<BreadcrumbList>
