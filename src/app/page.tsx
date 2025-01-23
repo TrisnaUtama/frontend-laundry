@@ -64,7 +64,7 @@ export default function Page() {
 					<p className="text-blue-500 font-bold flex justify-start">
 						Laundry Hub
 					</p>
-					<div className="flex justify-end items-center gap-3">
+					<div className="flex justify-end items-center gap-4">
 						<Link href="#">Home</Link>
 						<Link href="#">How its work</Link>
 						<Link href="#">Why Choosee Us</Link>
