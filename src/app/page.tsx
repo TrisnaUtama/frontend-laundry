@@ -169,32 +169,30 @@ export default function Page() {
 						Effortless Laundry, Fresh Results
 					</motion.p>
 					<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-						{
-							services.slice(0, 3).map((val, index) => (
-								<motion.div
+						{services.slice(0, 3).map((val, index) => (
+							<motion.div
+								key={index}
+								variants={itemVariants}
+								whileHover={{ scale: 1.05 }}
+								transition={{ type: "spring", stiffness: 300 }}
+							>
+								<Card
 									key={index}
-									variants={itemVariants}
-									whileHover={{ scale: 1.05 }}
-									transition={{ type: "spring", stiffness: 300 }}
+									className="bg-transparent mt-5 border-blue-500 rounded-lg transition-colors duration-300 hover:bg-blue-500 hover:text-white hover:shadow-md"
 								>
-									<Card
-										key={index}
-										className="bg-transparent mt-5 border-blue-500 rounded-lg transition-colors duration-300 hover:bg-blue-500 hover:text-white hover:shadow-md"
-									>
-										<CardHeader>
-											<CardTitle>{val.name}</CardTitle>
-										</CardHeader>
-										<CardContent>{val.description}</CardContent>
-										<div className="flex justify-between p-3 border-t border-gray-300">
-											<p className="text-sm ">
-												Estimated Hour: {val.estimated_hours} hour
-											</p>
-											<p className="font-bold text-xl ">Rp. {val.price}</p>
-										</div>
-									</Card>
-								</motion.div>
-							))
-						}
+									<CardHeader>
+										<CardTitle>{val.name}</CardTitle>
+									</CardHeader>
+									<CardContent>{val.description}</CardContent>
+									<div className="flex justify-between p-3 border-t border-gray-300">
+										<p className="text-sm ">
+											Estimated Hour: {val.estimated_hours} hour
+										</p>
+										<p className="font-bold text-xl ">Rp. {val.price}</p>
+									</div>
+								</Card>
+							</motion.div>
+						))}
 					</div>
 				</div>
 			</motion.section>
