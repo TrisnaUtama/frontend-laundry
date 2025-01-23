@@ -17,10 +17,11 @@ export const metadata: Metadata = {
 		description: "create with love and neat",
 		images: "/landing-page.png",
 	},
-	metadataBase: new URL("https://laundry-hub.vercel.app/"),
-	other: {
-		"google-site-verification": "nriBV-HuufyRSMI3ohhaOVYR2alVHQkkOlDUEeJGnoI",
+	// applicationName: "google-site-verification",
+	verification: {
+		google: "nriBV-HuufyRSMI3ohhaOVYR2alVHQkkOlDUEeJGnoI",
 	},
+	metadataBase: new URL("https://laundry-hub.vercel.app/"),
 };
 
 export default function RootLayout({
