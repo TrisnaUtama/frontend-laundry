@@ -12,80 +12,80 @@ import { useRouter } from "next/navigation";
 import SignInForm from "@/features/auth/signin.page";
 
 export default function Page() {
-  const [togglePassword, setTogglePassword] = useState<boolean>(false);
-  const [state, action, pending] = useActionState(signIn, undefined);
-  const { toast } = useToast();
-  const router = useRouter();
+	const [togglePassword, setTogglePassword] = useState<boolean>(false);
+	const [state, action, pending] = useActionState(signIn, undefined);
+	const { toast } = useToast();
+	const router = useRouter();
 
-  const handleTogglePassword = () => {
-    setTogglePassword(!togglePassword);
-  };
+	const handleTogglePassword = () => {
+		setTogglePassword(!togglePassword);
+	};
 
-  const renderErrorMessage = (field: string) => {
-    if (state?.status === false && state?.errors) {
-      const errors = state.errors as Record<string, string[]>;
-      if (errors[field]) {
-        return (
-          <div className="text-red-500 text-sm">
-            {errors[field].map((error: string) => (
-              <p key={error}>{error}</p>
-            ))}
-          </div>
-        );
-      }
-    }
-    return null;
-  };
+	const renderErrorMessage = (field: string) => {
+		if (state?.status === false && state?.errors) {
+			const errors = state.errors as Record<string, string[]>;
+			if (errors[field]) {
+				return (
+					<div className="text-red-500 text-sm">
+						{errors[field].map((error: string) => (
+							<p key={error}>{error}</p>
+						))}
+					</div>
+				);
+			}
+		}
+		return null;
+	};
 
-  useEffect(() => {
-    if (state?.status) {
-      toast({
-        variant: "success",
-        title: "Success",
-        description: "Successfully signed in",
-      });
-      const userRole = state?.data?.data?.user?.role;
-      if (userRole) {
-        if (userRole === "Admin") {
-          router.push("/dashboard/admin/");
-        } else if (userRole === "Staff") {
-          router.push("/dashboard/staff/");
-        } else if (userRole === "User") {
-          router.push("/dashboard/user/");
-        }
-      }
-    } else if (state?.status === false) {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: state.message || "Sign in failed",
-      });
-    }
-  }, [state, toast, router]);
-  return (
-    <main>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 h-screen">
-        {/* Image Section - Hidden on Small Screens */}
-        <div className="hidden md:flex w-full h-screen bg-[#2C71F6] justify-center items-center lg:col-span-3">
-          <Image
-            src="/auth.png"
-            width={400}
-            height={400}
-            alt="Authentication Illustration"
-            className="object-contain"
-          />
-        </div>
+	useEffect(() => {
+		if (state?.status) {
+			toast({
+				variant: "success",
+				title: "Success",
+				description: "Successfully signed in",
+			});
+			const userRole = state?.data?.data?.user?.role;
+			if (userRole) {
+				if (userRole === "Admin") {
+					router.push("/dashboard/admin/");
+				} else if (userRole === "Staff") {
+					router.push("/dashboard/staff/");
+				} else if (userRole === "User") {
+					router.push("/dashboard/user/");
+				}
+			}
+		} else if (state?.status === false) {
+			toast({
+				variant: "destructive",
+				title: "Error",
+				description: state.message || "Sign in failed",
+			});
+		}
+	}, [state, toast, router]);
+	return (
+		<main>
+			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 h-screen">
+				{/* Image Section - Hidden on Small Screens */}
+				<div className="hidden md:flex w-full h-screen bg-[#2C71F6] justify-center items-center lg:col-span-3">
+					<Image
+						src="/auth.png"
+						width={400}
+						height={400}
+						alt="Authentication Illustration"
+						className="object-contain"
+					/>
+				</div>
 
-        {/* Form Section */}
-        <div className=" m-auto w-[70%] lg:col-span-2">
-          <h1 className="font-bold text-2xl md:text-3xl lg:text-4xl">
-            Hello There...
-          </h1>
-          <p className="font-semibold text-sm md:text-base">
-            Protect your email and password
-          </p>
-          <SignInForm/>
-          {/* <form action={action} className="mt-4 space-y-4">
+				{/* Form Section */}
+				<div className=" m-auto w-[70%] lg:col-span-2">
+					<h1 className="font-bold text-2xl md:text-3xl lg:text-4xl">
+						Hello There...
+					</h1>
+					<p className="font-semibold text-sm md:text-base">
+						Protect your email and password
+					</p>
+					<SignInForm />
+					{/* <form action={action} className="mt-4 space-y-4">
             <div>
               <Label htmlFor="email" className="font-bold">
                 Email <span className="text-red-500">*</span>
@@ -160,8 +160,8 @@ export default function Page() {
               </p>
             </div>
           </form> */}
-        </div>
-      </div>
-    </main>
-  );
+				</div>
+			</div>
+		</main>
+	);
 }

@@ -19,7 +19,7 @@ export async function refreshToken(
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify({refresh_token})
+			body: JSON.stringify({ refresh_token }),
 		});
 		const response = await res.json();
 
@@ -29,7 +29,7 @@ export async function refreshToken(
 
 		return {
 			status: true,
-			data: response.data
+			data: response.data,
 		};
 	} catch (error) {
 		if (error instanceof Error) {
