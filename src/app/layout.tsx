@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 	},
 	openGraph: {
 		description: "create with love and neat",
-		images: [{ url: "/landing-page.png" }],
+		images: [{ url: "https://laundry-hub.vercel.app/landing-page.png" }],
 	},
 	// applicationName: "google-site-verification",
 	verification: {
